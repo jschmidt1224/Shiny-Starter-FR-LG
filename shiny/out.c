@@ -43,12 +43,12 @@ static void print_pkmn(const pkmn_t* pkmn, uint16_t tid, uint16_t sid){
 	printf("%-9s", NATURES[(uint8_t)(pkmn->pid % 25)]);
 	
 	//print ivs
-	printf("%2u   ", pkmn->ivs.hp);
-	printf("%2u   ", pkmn->ivs.atk);
-	printf("%2u   ", pkmn->ivs.def);
-	printf("%2u   ", pkmn->ivs.satk);
-	printf("%2u   ", pkmn->ivs.sdef);
-	printf("%2u  ", pkmn->ivs.spe);
+	printf("%2u   ", pkmn->ivs.stats[0]);
+	printf("%2u   ", pkmn->ivs.stats[1]);
+	printf("%2u   ", pkmn->ivs.stats[2]);
+	printf("%2u   ", pkmn->ivs.stats[3]);
+	printf("%2u   ", pkmn->ivs.stats[4]);
+	printf("%2u  ",  pkmn->ivs.stats[5]);
 	
 	//print pid
 	printf("0x%08X", pkmn->pid);
@@ -63,7 +63,7 @@ void print_table(const config_t *conf, uint16_t tid, uint16_t sid, uint32_t seed
 	printf("\n");
 		
 	for(uint32_t frame = first_frame; frame <= last_frame; frame++){
-		pkmn_t p = pkmn(seed);
+		pkmn_t p = pkmn(seed, conf->starter);
 		
 		if(frame == target_frame){
 			print_seperator();

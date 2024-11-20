@@ -48,28 +48,28 @@ static int config_handler(void *user, const char *section, const char *key, cons
 		}
 		
 	}else if(KEY_IS("MIN_IV_DEF")){
-		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.def));
-		conf->search_min_ivs.def %= 32; 
+		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.stats[2]));
+		conf->search_min_ivs.stats[2] %= 32; 
 		
 	}else if(KEY_IS("MIN_IV_ATK")){
-		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.atk));
-		conf->search_min_ivs.atk %= 32;
+		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.stats[1]));
+		conf->search_min_ivs.stats[1] %= 32;
 		
 	}else if(KEY_IS("MIN_IV_HP")){
-		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.hp));
-		conf->search_min_ivs.hp %= 32;
+		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.stats[2]));
+		conf->search_min_ivs.stats[0] %= 32;
 		
 	}else if(KEY_IS("MIN_IV_SDEF")){
-		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.sdef));
-		conf->search_min_ivs.sdef %= 32;
+		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.stats[4]));
+		conf->search_min_ivs.stats[4] %= 32;
 		
 	}else if(KEY_IS("MIN_IV_SATK")){
-		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.satk));
-		conf->search_min_ivs.satk %= 32;
+		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.stats[3]));
+		conf->search_min_ivs.stats[3] %= 32;
 		
 	}else if(KEY_IS("MIN_IV_SPE")){
-		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.spe));
-		conf->search_min_ivs.spe %= 32;
+		__mingw_sscanf(val, "%hhu", &(conf->search_min_ivs.stats[5]));
+		conf->search_min_ivs.stats[5] %= 32;
 		
 	}else if(KEY_IS("NATURES")){
 		if(strcmp(val, "") == 0){
@@ -85,21 +85,25 @@ static int config_handler(void *user, const char *section, const char *key, cons
 				for(uint8_t i=0; i<25; i++){
 					if(strcmp(nature, NATURES[i]) == 0){
 						conf->search_natures |= flag;
-						
 						break;
 					}
-					
 					flag = flag << 1;
 				}
-				
 				nature = strtok(NULL, " ");
 			}
-			
 			free(value);
 		}
-		
+	}else if(KEY_IS("STARTER")){
+		if(strcmp(val, "charmander") == 0){
+			conf->starter = CHARMANDER;
+		}else if(strcmp(val, "squirtle") == 0){
+			conf->starter = SQUIRTLE;
+		}else if(strcmp(val, "bulbasaur") == 0){
+			conf->starter = BULBASAUR;
+		}else{
+			conf->starter = NONE;
+		}
 	}
-	
 	return 1;
 }
 

@@ -42,12 +42,12 @@ static uint8_t is_target(const config_t *conf, const pkmn_t *pkmn, uint16_t tid,
 		return 0;
 	
 	//check ivs
-	if(pkmn->ivs.def < conf->search_min_ivs.def 
-			|| pkmn->ivs.atk < conf->search_min_ivs.atk 
-			|| pkmn->ivs.hp < conf->search_min_ivs.hp 
-			|| pkmn->ivs.sdef < conf->search_min_ivs.sdef 
-			|| pkmn->ivs.satk < conf->search_min_ivs.satk 
-			|| pkmn->ivs.spe < conf->search_min_ivs.spe)
+	if(pkmn->ivs.stats[2] < conf->search_min_ivs.stats[2] 
+			|| pkmn->ivs.stats[1] < conf->search_min_ivs.stats[1] 
+			|| pkmn->ivs.stats[0] < conf->search_min_ivs.stats[0] 
+			|| pkmn->ivs.stats[4] < conf->search_min_ivs.stats[4]
+			|| pkmn->ivs.stats[3] < conf->search_min_ivs.stats[3] 
+			|| pkmn->ivs.stats[5] < conf->search_min_ivs.stats[5])
 		return 0;
 	
 	return 1;
@@ -64,7 +64,7 @@ uint8_t find_pid_r(const config_t *conf, uint16_t tid, uint16_t sid, uint32_t *p
 	
 	//search for first target in [L, U] and update seeds of last conf->pid_r_threshold frames
 	for(frame = 0; frame<=conf->u; frame++){
-		pkmn_t p = pkmn(seed);
+		pkmn_t p = pkmn(seed, NONE);
 		
 		if(frame >= conf->l && is_target(conf, &p, tid, sid)){
 			*pid_r = frame;
